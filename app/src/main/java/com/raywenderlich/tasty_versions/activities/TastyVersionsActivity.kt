@@ -30,44 +30,39 @@
  *
  */
 
-package com.raywenderlich.tasty_versions.activities;
+package com.raywenderlich.tasty_versions.activities
 
-import android.databinding.DataBindingUtil;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.databinding.DataBindingUtil
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import com.raywenderlich.TastyVersionsApplication
+import com.raywenderlich.tasty_versions.R
+import com.raywenderlich.tasty_versions.adapters.VersionItemAdapter
+import com.raywenderlich.tasty_versions.databinding.ActivityTastyVersionsBinding
+import com.raywenderlich.tasty_versions.decorators.VersionItemDecorator
 
-import com.raywenderlich.TastyVersionsApplication;
-import com.raywenderlich.tasty_versions.R;
-import com.raywenderlich.tasty_versions.adapters.VersionItemAdapter;
-import com.raywenderlich.tasty_versions.databinding.ActivityTastyVersionsBinding;
-import com.raywenderlich.tasty_versions.decorators.VersionItemDecorator;
+class TastyVersionsActivity : AppCompatActivity() {
+    private lateinit var tastyVersionsBinding: ActivityTastyVersionsBinding
 
-public class TastyVersionsActivity extends AppCompatActivity {
-  private ActivityTastyVersionsBinding tastyVersionsBinding;
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        tastyVersionsBinding = DataBindingUtil.setContentView<ActivityTastyVersionsBinding>(this,
+                R.layout.activity_tasty_versions)
+    }
 
-  @Override
-  protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    tastyVersionsBinding =
-        DataBindingUtil.setContentView(this, R.layout.activity_tasty_versions);
-  }
+    public override fun onResume() {
+        super.onResume()
+        setupUI()
+    }
 
-  @Override public void onResume() {
-    super.onResume();
-    setupUI();
-  }
-
-  private void setupUI() {
-    LinearLayoutManager layoutManager =
-        new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-    VersionItemDecorator itemDecorator = new VersionItemDecorator(8);
-    VersionItemAdapter adapter
-        = new VersionItemAdapter(TastyVersionsApplication.getSharedInstance().getVersions(), this);
-    tastyVersionsBinding.versionsRecyclerView.setHasFixedSize(true);
-    tastyVersionsBinding.versionsRecyclerView.setLayoutManager(layoutManager);
-    tastyVersionsBinding.versionsRecyclerView.addItemDecoration(itemDecorator);
-    tastyVersionsBinding.versionsRecyclerView.setAdapter(adapter);
-  }
+    private fun setupUI() {
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val itemDecorator = VersionItemDecorator(8)
+        val adapter = VersionItemAdapter(TastyVersionsApplication.getSharedInstance().versions, this)
+        tastyVersionsBinding!!.versionsRecyclerView.setHasFixedSize(true)
+        tastyVersionsBinding!!.versionsRecyclerView.layoutManager = layoutManager
+        tastyVersionsBinding!!.versionsRecyclerView.addItemDecoration(itemDecorator)
+        tastyVersionsBinding!!.versionsRecyclerView.adapter = adapter
+    }
 }

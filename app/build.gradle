@@ -32,6 +32,7 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: "kotlin-kapt"
 
 android {
     compileSdkVersion 26
@@ -61,6 +62,7 @@ ext {
 dependencies {
   compile "com.android.support:appcompat-v7:${supportLibVersion}"
   compile "com.android.support:recyclerview-v7:${supportLibVersion}"
+  kapt 'com.android.databinding:compiler:3.0.0'
 
   implementation fileTree(dir: 'libs', include: ['*.jar'])
   implementation 'com.android.support:appcompat-v7:26.1.0'
