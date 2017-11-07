@@ -30,40 +30,6 @@
  *
  */
 
-package com.raywenderlich.tasty_versions.models;
+package com.raywenderlich.tasty_versions.models
 
-public class TastyVersionModel {
-  private String name;
-  private String apiVersion;
-  private int imageResource;
-
-  public TastyVersionModel(String name, String apiVersion, int imageResource) {
-    this.name = name;
-    this.apiVersion = apiVersion;
-    this.imageResource = imageResource;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getApiVersion() {
-    return apiVersion;
-  }
-
-  public void setApiVersion(String apiVersion) {
-    this.apiVersion = apiVersion;
-  }
-
-  public int getImageResource() {
-    return imageResource;
-  }
-
-  public void setImageResource(int imageResource) {
-    this.imageResource = imageResource;
-  }
-}
+data class TastyVersionModel(var name: String?, var apiVersion: String?, var imageResource: Int)
