@@ -30,20 +30,18 @@
  *
  */
 
-package com.raywenderlich.tasty_versions.activities;
+package com.raywenderlich.tasty_versions.activities
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 
-public class SplashActivity extends AppCompatActivity {
+class SplashActivity : AppCompatActivity() {
 
-  @Override
-  protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    Intent intent = new Intent(this, TastyVersionsActivity.class);
-    startActivity(intent);
-    finish();
-  }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val intent = Intent(this, TastyVersionsActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 }
