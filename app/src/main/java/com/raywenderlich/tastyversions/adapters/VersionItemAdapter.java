@@ -30,47 +30,48 @@
  *
  */
 
-package com.raywenderlich.tasty_versions.viewholders;
+package com.raywenderlich.tastyversions.adapters;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
+import android.view.ViewGroup;
 
-import com.raywenderlich.tasty_versions.databinding.TastyVersionViewHolderBinding;
-import com.raywenderlich.tasty_versions.models.TastyVersionModel;
+import com.raywenderlich.tastyversions.R;
+import com.raywenderlich.tastyversions.models.TastyVersionModel;
+import com.raywenderlich.tastyversions.viewholders.VersionItemViewHolder;
 
-public class VersionItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+import java.util.List;
 
+public class VersionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+  private List<TastyVersionModel> versions;
   private Context context;
-  private TastyVersionModel tastyVersionModel;
-  private TastyVersionViewHolderBinding binding;
-  private int position;
 
-  public VersionItemViewHolder(Context context, View itemView) {
-    super(itemView);
+  public VersionItemAdapter(List<TastyVersionModel> versions, Context context) {
+    this.versions = versions;
     this.context = context;
-    this.binding = DataBindingUtil.bind(itemView);
-    itemView.setOnClickListener(this);
-  }
-
-  public void bindTastyVersionModel(TastyVersionModel tastyVersionModel, int position) {
-    this.position = position;
-    this.tastyVersionModel = tastyVersionModel;
-    this.binding.versionTextView.setText(tastyVersionModel.getName());
-    this.binding.versionImageView.setImageResource(tastyVersionModel.getImageResource());
   }
 
   @Override
-  public void onClick(View v) {
-    if (this.tastyVersionModel != null) {
-      Toast.makeText(this.context, "Version API # "
-              + this.tastyVersionModel.getApiVersion()
-              + " at position "
-              + this.position,
-          Toast.LENGTH_SHORT)
-          .show();
+  public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    View view = LayoutInflater.from(context)
+        .inflate(R.layout.tasty_version_view_holder, parent, false);
+    return new VersionItemViewHolder(context, view);
+  }
+
+  @Override
+  public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    if (holder instanceof VersionItemViewHolder) {
+      final TastyVersionModel version = versions.get(position);
+      VersionItemViewHolder versionItemViewHolder = (VersionItemViewHolder) holder;
+      versionItemViewHolder.bindTastyVersionModel(version, position);
     }
+  }
+
+  @Override
+  public int getItemCount() {
+    return versions.size();
   }
 }

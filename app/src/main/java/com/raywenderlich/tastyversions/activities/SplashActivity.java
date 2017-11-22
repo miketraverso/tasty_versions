@@ -30,44 +30,20 @@
  *
  */
 
-package com.raywenderlich.tasty_versions.activities;
+package com.raywenderlich.tastyversions.activities;
 
-import android.databinding.DataBindingUtil;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 
-import com.raywenderlich.TastyVersionsApplication;
-import com.raywenderlich.tasty_versions.R;
-import com.raywenderlich.tasty_versions.adapters.VersionItemAdapter;
-import com.raywenderlich.tasty_versions.databinding.ActivityTastyVersionsBinding;
-import com.raywenderlich.tasty_versions.decorators.VersionItemDecorator;
-
-public class TastyVersionsActivity extends AppCompatActivity {
-  private ActivityTastyVersionsBinding tastyVersionsBinding;
+public class SplashActivity extends AppCompatActivity {
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    tastyVersionsBinding =
-        DataBindingUtil.setContentView(this, R.layout.activity_tasty_versions);
-  }
-
-  @Override public void onResume() {
-    super.onResume();
-    setupUI();
-  }
-
-  private void setupUI() {
-    LinearLayoutManager layoutManager =
-        new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-    VersionItemDecorator itemDecorator = new VersionItemDecorator(8);
-    VersionItemAdapter adapter
-        = new VersionItemAdapter(TastyVersionsApplication.getSharedInstance().getVersions(), this);
-    tastyVersionsBinding.versionsRecyclerView.setHasFixedSize(true);
-    tastyVersionsBinding.versionsRecyclerView.setLayoutManager(layoutManager);
-    tastyVersionsBinding.versionsRecyclerView.addItemDecoration(itemDecorator);
-    tastyVersionsBinding.versionsRecyclerView.setAdapter(adapter);
+    Intent intent = new Intent(this, TastyVersionsActivity.class);
+    startActivity(intent);
+    finish();
   }
 }

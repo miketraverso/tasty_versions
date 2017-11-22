@@ -30,40 +30,44 @@
  *
  */
 
-package com.raywenderlich.tasty_versions.models;
+package com.raywenderlich.tastyversions.activities;
 
-public class TastyVersionModel {
-  private String name;
-  private String apiVersion;
-  private int imageResource;
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 
-  public TastyVersionModel(String name, String apiVersion, int imageResource) {
-    this.name = name;
-    this.apiVersion = apiVersion;
-    this.imageResource = imageResource;
+import com.raywenderlich.tastyversions.TastyVersionsApplication;
+import com.raywenderlich.tastyversions.R;
+import com.raywenderlich.tastyversions.adapters.VersionItemAdapter;
+import com.raywenderlich.tastyversions.databinding.ActivityTastyVersionsBinding;
+import com.raywenderlich.tastyversions.decorators.VersionItemDecorator;
+
+public class TastyVersionsActivity extends AppCompatActivity {
+  private ActivityTastyVersionsBinding tastyVersionsBinding;
+
+  @Override
+  protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    tastyVersionsBinding =
+        DataBindingUtil.setContentView(this, R.layout.activity_tasty_versions);
   }
 
-  public String getName() {
-    return name;
+  @Override public void onResume() {
+    super.onResume();
+    setupUI();
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getApiVersion() {
-    return apiVersion;
-  }
-
-  public void setApiVersion(String apiVersion) {
-    this.apiVersion = apiVersion;
-  }
-
-  public int getImageResource() {
-    return imageResource;
-  }
-
-  public void setImageResource(int imageResource) {
-    this.imageResource = imageResource;
+  private void setupUI() {
+    LinearLayoutManager layoutManager =
+        new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+    VersionItemDecorator itemDecorator = new VersionItemDecorator(8);
+    VersionItemAdapter adapter
+        = new VersionItemAdapter(TastyVersionsApplication.getSharedInstance().getVersions(), this);
+    tastyVersionsBinding.versionsRecyclerView.setHasFixedSize(true);
+    tastyVersionsBinding.versionsRecyclerView.setLayoutManager(layoutManager);
+    tastyVersionsBinding.versionsRecyclerView.addItemDecoration(itemDecorator);
+    tastyVersionsBinding.versionsRecyclerView.setAdapter(adapter);
   }
 }

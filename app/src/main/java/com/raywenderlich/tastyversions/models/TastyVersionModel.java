@@ -30,20 +30,40 @@
  *
  */
 
-package com.raywenderlich.tasty_versions.activities;
+package com.raywenderlich.tastyversions.models;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+public class TastyVersionModel {
+  private String name;
+  private String apiVersion;
+  private int imageResource;
 
-public class SplashActivity extends AppCompatActivity {
+  public TastyVersionModel(String name, String apiVersion, int imageResource) {
+    this.name = name;
+    this.apiVersion = apiVersion;
+    this.imageResource = imageResource;
+  }
 
-  @Override
-  protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    Intent intent = new Intent(this, TastyVersionsActivity.class);
-    startActivity(intent);
-    finish();
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getApiVersion() {
+    return apiVersion;
+  }
+
+  public void setApiVersion(String apiVersion) {
+    this.apiVersion = apiVersion;
+  }
+
+  public int getImageResource() {
+    return imageResource;
+  }
+
+  public void setImageResource(int imageResource) {
+    this.imageResource = imageResource;
   }
 }

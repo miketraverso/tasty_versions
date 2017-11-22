@@ -30,48 +30,52 @@
  *
  */
 
-package com.raywenderlich.tasty_versions.adapters;
+package com.raywenderlich.tastyversions;
 
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.app.Application;
 
-import com.raywenderlich.tasty_versions.R;
-import com.raywenderlich.tasty_versions.models.TastyVersionModel;
-import com.raywenderlich.tasty_versions.viewholders.VersionItemViewHolder;
+import com.raywenderlich.tastyversions.models.TastyVersionModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class VersionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class TastyVersionsApplication extends Application {
 
+  private static TastyVersionsApplication sharedInstance;
   private List<TastyVersionModel> versions;
-  private Context context;
 
-  public VersionItemAdapter(List<TastyVersionModel> versions, Context context) {
-    this.versions = versions;
-    this.context = context;
+  public TastyVersionsApplication() {
+    sharedInstance = this;
+  }
+
+  public static TastyVersionsApplication getSharedInstance() {
+    return sharedInstance;
+  }
+
+  public List<TastyVersionModel> getVersions() {
+    return versions;
   }
 
   @Override
-  public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(context)
-        .inflate(R.layout.tasty_version_view_holder, parent, false);
-    return new VersionItemViewHolder(context, view);
+  public void onCreate() {
+    super.onCreate();
+    loadVersions();
   }
 
-  @Override
-  public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    if (holder instanceof VersionItemViewHolder) {
-      final TastyVersionModel version = versions.get(position);
-      VersionItemViewHolder versionItemViewHolder = (VersionItemViewHolder) holder;
-      versionItemViewHolder.bindTastyVersionModel(version, position);
-    }
-  }
-
-  @Override
-  public int getItemCount() {
-    return versions.size();
+  public void loadVersions() {
+    versions = new ArrayList<>();
+    versions.add(new TastyVersionModel("Cupcake", "1.5", R.drawable.cupcake));
+    versions.add(new TastyVersionModel("Donut", "1.6", R.drawable.donut));
+    versions.add(new TastyVersionModel("Eclair", "2.0 – 2.1", R.drawable.eclair));
+    versions.add(new TastyVersionModel("Froyo", "2.2 – 2.2.3", R.drawable.froyo));
+    versions.add(new TastyVersionModel("Gingerbread", "2.3 – 2.3.7", R.drawable.gingerbread));
+    versions.add(new TastyVersionModel("Honeycomb", "3.0 – 3.2.6", R.drawable.honeycomb));
+    versions.add(new TastyVersionModel("Ice cream Sandwich", "4.0 – 4.0.4", R.drawable.icecream_sandwich));
+    versions.add(new TastyVersionModel("Jellybean", "4.1 – 4.3.1", R.drawable.jellybean));
+    versions.add(new TastyVersionModel("KitKat", "4.4 – 4.4.4", R.drawable.kitkat));
+    versions.add(new TastyVersionModel("Lollipop", "5.0 – 5.1.1", R.drawable.lollipop));
+    versions.add(new TastyVersionModel("Marshmallow", "6.0 – 6.0.1", R.drawable.marshmallow));
+    versions.add(new TastyVersionModel("Nougat", "7.0 – 7.1.2", R.drawable.nougat));
+    versions.add(new TastyVersionModel("Oreo", "8.0", R.drawable.oreo));
   }
 }

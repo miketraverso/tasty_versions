@@ -1,4 +1,4 @@
-package com.raywenderlich.tasty_versions;
+package com.raywenderlich.tastyversions;
 
 
 import android.content.Context;
