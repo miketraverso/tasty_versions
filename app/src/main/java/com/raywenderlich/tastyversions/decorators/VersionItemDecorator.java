@@ -30,7 +30,7 @@
  *
  */
 
-package com.raywenderlich.tasty_versions.decorators;
+package com.raywenderlich.tastyversions.decorators;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

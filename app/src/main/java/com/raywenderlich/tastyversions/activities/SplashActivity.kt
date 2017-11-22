@@ -30,6 +30,18 @@
  *
  */
 
-package com.raywenderlich.tasty_versions.models
+package com.raywenderlich.tastyversions.activities
 
-data class TastyVersionModel(var name: String?, var apiVersion: String?, var imageResource: Int)
+import android.content.Intent
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+
+class SplashActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val intent = Intent(this, TastyVersionsActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+}

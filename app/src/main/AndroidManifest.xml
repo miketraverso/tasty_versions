@@ -31,10 +31,10 @@
   ~  */
   -->
 
-<manifest package="com.raywenderlich.tasty_versions"
+<manifest package="com.raywenderlich.tastyversions"
           xmlns:android="http://schemas.android.com/apk/res/android">
   <application
-    android:name="com.raywenderlich.TastyVersionsApplication"
+    android:name="com.raywenderlich.tastyversions.TastyVersionsApplication"
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
@@ -42,7 +42,7 @@
     android:theme="@style/AppTheme">
 
     <activity
-      android:name=".activities.SplashActivity"
+      android:name="com.raywenderlich.tastyversions.activities.SplashActivity"
       android:screenOrientation="portrait"
       android:theme="@style/SplashTheme">
       <intent-filter>
@@ -52,7 +52,7 @@
     </activity>
 
     <activity
-      android:name=".activities.TastyVersionsActivity"
+      android:name="com.raywenderlich.tastyversions.activities.TastyVersionsActivity"
       android:label="@string/app_name"
       android:launchMode="singleTask"
       android:exported="true">

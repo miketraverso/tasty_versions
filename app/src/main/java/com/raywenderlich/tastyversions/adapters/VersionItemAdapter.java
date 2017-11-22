@@ -30,39 +30,48 @@
  *
  */
 
-package com.raywenderlich.tasty_versions.activities
+package com.raywenderlich.tastyversions.adapters;
 
-import android.databinding.DataBindingUtil
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import com.raywenderlich.TastyVersionsApplication
-import com.raywenderlich.tasty_versions.R
-import com.raywenderlich.tasty_versions.adapters.VersionItemAdapter
-import com.raywenderlich.tasty_versions.databinding.ActivityTastyVersionsBinding
-import com.raywenderlich.tasty_versions.decorators.VersionItemDecorator
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-class TastyVersionsActivity : AppCompatActivity() {
-    private lateinit var tastyVersionsBinding: ActivityTastyVersionsBinding
+import com.raywenderlich.tastyversions.R;
+import com.raywenderlich.tastyversions.models.TastyVersionModel;
+import com.raywenderlich.tastyversions.viewholders.VersionItemViewHolder;
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        tastyVersionsBinding = DataBindingUtil.setContentView<ActivityTastyVersionsBinding>(this,
-                R.layout.activity_tasty_versions)
+import java.util.List;
+
+public class VersionItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+  private List<TastyVersionModel> versions;
+  private Context context;
+
+  public VersionItemAdapter(List<TastyVersionModel> versions, Context context) {
+    this.versions = versions;
+    this.context = context;
+  }
+
+  @Override
+  public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    View view = LayoutInflater.from(context)
+        .inflate(R.layout.tasty_version_view_holder, parent, false);
+    return new VersionItemViewHolder(context, view);
+  }
+
+  @Override
+  public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    if (holder instanceof VersionItemViewHolder) {
+      final TastyVersionModel version = versions.get(position);
+      VersionItemViewHolder versionItemViewHolder = (VersionItemViewHolder) holder;
+      versionItemViewHolder.bindTastyVersionModel(version, position);
     }
+  }
 
-    public override fun onResume() {
-        super.onResume()
-        setupUI()
-    }
-
-    private fun setupUI() {
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        val itemDecorator = VersionItemDecorator(8)
-        val adapter = VersionItemAdapter(TastyVersionsApplication.getSharedInstance().versions, this)
-        tastyVersionsBinding!!.versionsRecyclerView.setHasFixedSize(true)
-        tastyVersionsBinding!!.versionsRecyclerView.layoutManager = layoutManager
-        tastyVersionsBinding!!.versionsRecyclerView.addItemDecoration(itemDecorator)
-        tastyVersionsBinding!!.versionsRecyclerView.adapter = adapter
-    }
+  @Override
+  public int getItemCount() {
+    return versions.size();
+  }
 }

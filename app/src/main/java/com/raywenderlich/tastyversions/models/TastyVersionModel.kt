@@ -30,47 +30,6 @@
  *
  */
 
-package com.raywenderlich.tasty_versions.viewholders;
+package com.raywenderlich.tastyversions.models
 
-import android.content.Context;
-import android.databinding.DataBindingUtil;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Toast;
-
-import com.raywenderlich.tasty_versions.databinding.TastyVersionViewHolderBinding;
-import com.raywenderlich.tasty_versions.models.TastyVersionModel;
-
-public class VersionItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
-  private Context context;
-  private TastyVersionModel tastyVersionModel;
-  private TastyVersionViewHolderBinding binding;
-  private int position;
-
-  public VersionItemViewHolder(Context context, View itemView) {
-    super(itemView);
-    this.context = context;
-    this.binding = DataBindingUtil.bind(itemView);
-    itemView.setOnClickListener(this);
-  }
-
-  public void bindTastyVersionModel(TastyVersionModel tastyVersionModel, int position) {
-    this.position = position;
-    this.tastyVersionModel = tastyVersionModel;
-    this.binding.versionTextView.setText(tastyVersionModel.getName());
-    this.binding.versionImageView.setImageResource(tastyVersionModel.getImageResource());
-  }
-
-  @Override
-  public void onClick(View v) {
-    if (this.tastyVersionModel != null) {
-      Toast.makeText(this.context, "Version API # "
-              + this.tastyVersionModel.getApiVersion()
-              + " at position "
-              + this.position,
-          Toast.LENGTH_SHORT)
-          .show();
-    }
-  }
-}
+data class TastyVersionModel(var name: String?, var apiVersion: String?, var imageResource: Int)

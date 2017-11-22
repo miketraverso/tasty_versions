@@ -30,48 +30,39 @@
  *
  */
 
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: "kotlin-kapt"
+package com.raywenderlich.tastyversions.activities
 
-android {
-    compileSdkVersion 26
-    defaultConfig {
-        applicationId "com.raywenderlich.tastyversions"
-        minSdkVersion 23
-        targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+import android.databinding.DataBindingUtil
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import com.raywenderlich.tastyversions.R
+import com.raywenderlich.tastyversions.TastyVersionsApplication
+import com.raywenderlich.tastyversions.adapters.VersionItemAdapter
+import com.raywenderlich.tastyversions.databinding.ActivityTastyVersionsBinding
+import com.raywenderlich.tastyversions.decorators.VersionItemDecorator
+
+class TastyVersionsActivity : AppCompatActivity() {
+    private lateinit var tastyVersionsBinding: ActivityTastyVersionsBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        tastyVersionsBinding = DataBindingUtil.setContentView<ActivityTastyVersionsBinding>(this,
+                R.layout.activity_tasty_versions)
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+
+    public override fun onResume() {
+        super.onResume()
+        setupUI()
     }
-  dataBinding {
-    enabled = true
-  }
-}
 
-ext {
-  supportLibVersion = '25.2.0'
-}
-
-dependencies {
-  compile "com.android.support:appcompat-v7:${supportLibVersion}"
-  compile "com.android.support:recyclerview-v7:${supportLibVersion}"
-  kapt 'com.android.databinding:compiler:3.0.0'
-
-  implementation fileTree(dir: 'libs', include: ['*.jar'])
-  implementation 'com.android.support:appcompat-v7:26.1.0'
-  implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-  testImplementation 'junit:junit:4.12'
-  androidTestImplementation 'com.android.support.test:runner:1.0.1'
-  androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-  compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-}
-repositories {
-  mavenCentral()
+    private fun setupUI() {
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val itemDecorator = VersionItemDecorator(8)
+        val adapter = VersionItemAdapter(TastyVersionsApplication.getSharedInstance().versions, this)
+        tastyVersionsBinding!!.versionsRecyclerView.setHasFixedSize(true)
+        tastyVersionsBinding!!.versionsRecyclerView.layoutManager = layoutManager
+        tastyVersionsBinding!!.versionsRecyclerView.addItemDecoration(itemDecorator)
+        tastyVersionsBinding!!.versionsRecyclerView.adapter = adapter
+    }
 }
